@@ -1,4 +1,18 @@
-{:deps {http-kit {:mvn/version "2.3.0"}
-        cheshire {:mvn/version "5.8.1"}
-        org.clojure/data.codec {:mvn/version "0.1.1"}}
- :paths ["src" "resources" "target" "test"]}
+{:deps           {
+                  org.clojure/clojure                 {:mvn/version "1.10.3"}
+                  http-kit/http-kit               {:mvn/version "2.5.3"}
+                  cheshire/cheshire               {:mvn/version "5.8.1"}
+
+                  net.sourceforge.tess4j/tess4j {:mvn/version "4.1.1"
+                                                 :exclusions [com.lowagie/itext]} ;{:local/root "/home/carl/Downloads/Tess4J/dist/tess4j-3.4.8.jar"}
+
+                  ;com.google.cloud/libraries-bom {:mvn/version "22.0.0"}
+                  philoskim/debux        {:mvn/version "0.8.1"}
+                  org.clojure/data.codec {:mvn/version "0.1.1"}}
+
+
+ :aliases {:trust {:jvm-opts ["-Djavax.net.ssl.trustStore=/home/carl/.jdks/openjdk-16.0.2/lib/security/jssecacerts" "-Djavax.net.debug=ssl:handshake"]}}
+
+
+ ;-Djavax.net.ssl.trustStore=/home/carl/.jdks/openjdk-16.0.2/lib/security/jssecacerts
+ :paths          ["src" "resources" "target" "test"]}

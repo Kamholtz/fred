@@ -1,10 +1,13 @@
 (ns fred.core
   (:require [fred.annotate :as image]
             [clojure.java.io :as io]
+            [debux.cs.core :as d :refer-macros [clog clogn dbg dbgn break
+                                                clog_ clogn_ dbg_ dbgn_ break_]]
             [clojure.string :as string]))
 
-(def document-data (read-string (slurp "images/raw/document-03-03-2019_clicks_42237_1.edn")))
-(def text-data (read-string (slurp "images/raw/text-03-03-2019_clicks_42237_1.edn")))
+(use 'debux.core)
+;; (def document-data (read-string (slurp "images/raw/document-03-03-2019_clicks_42237_1.edn")))
+;; (def text-data (read-string (slurp "images/raw/text-03-03-2019_clicks_42237_1.edn")))
 
 
 (defn annotation-data
@@ -44,6 +47,7 @@
                    (rest annotations))))))))
 
 (comment
+
   (let [file-name "03-03-2019_clicks_42237_1"
         image-path (str "images/raw/" file-name ".JPG")
         data-path (str "images/raw/document-" file-name ".edn")
@@ -55,6 +59,15 @@
 
 
 
+  (dbg (let [file-name "receipt"
+             image-path (str "images/raw/" file-name ".JPG")
+             data-path (str "images/raw/document-" file-name ".edn")
+             image-data (image/annotate-document image-path)
+             print-length *print-length*]
+         (set! *print-length* Integer/MAX_VALUE)
+         (spit data-path (pr-str image-data))
+         (set! *print-length* print-length)))
+
   (->> text-data
        :data
        :responses
@@ -64,8 +77,8 @@
        (map annotation-data)
        extract-rows
        (map (fn [row] (sort-by :sort-index row)))
-       (map (fn [row] (map :description row)))
-       )
+       (map (fn [row] (map :description row))))
+
 
 
 

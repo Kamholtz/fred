@@ -2,11 +2,11 @@
 (ns fred.annotate
   (:require [org.httpkit.client :as http]
             [cheshire.core :as json]
+            [clojure.string :as str]
             [clojure.data.codec.base64 :as b64]))
 
 
 (def ^{:private true} token (slurp "./secrets/api.txt"))
-
 
 (defn- encode-file [path]
   (let [f (java.io.File. path)
